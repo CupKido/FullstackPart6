@@ -1,3 +1,4 @@
+const Users = require('./user.js')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.MONGO_DB_CONNECTION_STRING
 
@@ -19,20 +20,23 @@ async function getCollection(callback){
 
 // Connection URL and database name
 module.exports.getTasks = async (userId) => {
+    if (!(await Users.getUserById(userId))) return null;
     return await getCollection(async (tasks) => {
         return await tasks.find({ userId: userId }).toArray()
     })
 }
 
 module.exports.getTask = async (userId, taskId) => {
+    if (!(await Users.getUserById(userId))) return null;
     return await getCollection(async (tasks) => {
         return await tasks.findOne({ userId: userId, _id : new ObjectId(taskId) });
     })
 }
 
-module.exports.createTask = async (userId, description) =>{
+module.exports.createTask = async (userId, title) =>{
+    if (!(await Users.getUserById(userId))) return null;
     return await getCollection(async (tasks) => {
-        task = { userId : userId, description : description, completed : false }
+        task = { userId : userId, title : title, completed : false }
         const res = await tasks.insertOne(task);
         return task
     })
