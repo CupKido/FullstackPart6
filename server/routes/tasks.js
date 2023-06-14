@@ -34,7 +34,7 @@ router.post('/:userId', async (req, res) => {
 
     const userId = req.params.userId;
     const title = req.body.title;
-    const result = await Tasks.createTask(userId, description);
+    const result = await Tasks.createTask(userId, title);
     if (result === null) return res.status(404).json()
     res.status(201).json(result)
 })

@@ -24,8 +24,6 @@ module.exports.getUser = async (username, password) => {
         let user = await users.findOne({username : username, password : password})
         if (!user) return null
         delete user.password
-        user.id = user._id
-        delete user._id
         return user
     })
 }
@@ -35,8 +33,6 @@ module.exports.getUserById = async (userId) => {
         let user = await users.findOne({_id : new ObjectId(userId)})
         if (!user) return null
         delete user.password
-        user.id = user._id
-        delete user._id
         return user
     })
 }
