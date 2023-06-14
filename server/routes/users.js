@@ -3,21 +3,16 @@ const express = require('express');
 const Users = require('../models/user')
 const Joi = require('joi')
 const router = express.Router()
-router.post('/:username', async (req, res) => {
+
+router.post('/login', async (req, res) => {
     const bodySchema = Joi.object({
-        password : Joi.string().required()
-    })
-    const paramsSchema = Joi.object({
+        password : Joi.string().required(),
         username : Joi.string().required()
     })
-    const res1 = paramsSchema.validate(req.params)
-    const error1 = res1.error
-    if(error2) return res.status(400).json(error1.details[0].message)
-    const res2 = bodySchema.validate(req.body)
-    const error2 = res2.error
-    if(error2) return res.status(400).json(error2.details[0].message)
+    const {error} = bodySchema.validate(req.body)
+    if(error) return res.status(400).json(error.details[0].message)
     try{
-        const user = await Users.getUser(req.params.username, req.body.password)
+        const user = await Users.getUser(req.body.username, req.body.password)
         if(!user) return res.status(404).json()
         res.status(200).json(user)
     }
@@ -58,6 +53,7 @@ router.post('/', async (req, res) => {
     const password = req.body.password;
     try{
         const result = await Users.createUser(username, firstName, lastName, password);
+        if (!result) return res.status(409).json()
         res.status(201).json(result)
     }catch{
         res.status(500)
