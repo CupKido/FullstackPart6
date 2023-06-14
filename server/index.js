@@ -10,12 +10,6 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // 2. copy 'dist' folder to server folder
 // 3. run: npm start or npm run dev
 
-
-// if dist folder exists in client folder, copy it to server folder
-// if (!existsSync(path.join(__dirname, '../client/dist'))){
-//     console.log('Building client files...');
-//     execSync('cd ' + path.join(__dirname, '../client' + ' && npm run build'));
-// }
 if (!existsSync(path.join(__dirname, 'dist'))) {
     console.log('Building client files...');
     execSync('cd ' + path.join(__dirname, '../client' + ' && npm run build'));
