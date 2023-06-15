@@ -40,8 +40,18 @@ router.post('/:userId', async (req, res) => {
 })
 
 router.put('/:userId/:taskId', async (req, res) => {
-    task = {id : req.params.taskId, userId : req.params.userId, description : req.body.description, completed : req.body.completed }
-    //console.log(task)
+    // validating data
+    const bodySchema = Joi.object({
+        title : Joi.string().required(),
+        completed : Joi.boolean().required()
+    })
+    const {error} = bodySchema.validate(req.body)
+    // if not valid respond with Bad request
+    if(error) return res.status(400).json(error.details[0].message)
+
+
+
+    task = {id : req.params.taskId, userId : req.params.userId, title : req.body.title, completed : req.body.completed }
     const result = await Tasks.updateTask(task)
     if (result === null) return res.status(404).json()
     res.status(200).json(result)
