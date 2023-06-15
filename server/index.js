@@ -7,7 +7,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json())
 
 const tasksRouter = require('./routes/tasks')
-const userRouter = require('./routes/users')
+const usersRouter = require('./routes/users')
+const postsRouter = require('./routes/posts')
 // stages for updating client files:
 // 1. go to client folder, run: npm run build
 // 2. copy 'dist' folder to server folder
@@ -25,5 +26,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/tasks', tasksRouter)
-app.use('/api/users', userRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/posts', postsRouter)
 app.listen(5000, () => console.log('Server started on port 5000'));
