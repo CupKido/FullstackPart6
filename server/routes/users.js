@@ -75,7 +75,7 @@ router.delete('/:userId', async (req, res) => {
     const posts  = await Posts.getPosts(userId);
     console.log(posts);
     posts.forEach(async (post) => {
-        const comments = await Comments.getComments(post._id);
+        const comments = await Comments.getComments(post._id.toString());
         console.log(comments);
         comments.forEach(async (comment) => {
             await Comments.deleteComment(post._id, comment._id);

@@ -90,7 +90,7 @@ router.get('/:userId/:postId/comments', async (req, res) =>{
         if (!user) return res.status(404).json('User not found')
         const post = await Posts.getPost(userId, postId)
         if (!post) return res.status(404).json('Post not found')
-        console.log(req.query.id)
+        console.log(post._id.toString())
         if(req.query.id === undefined){
             const comments = await Comments.getComments(postId)
             return res.status(200).json(comments)
@@ -101,7 +101,8 @@ router.get('/:userId/:postId/comments', async (req, res) =>{
             if (!comment) return res.status(404).json('Comment not found')
             return res.status(200).json(comment)
         }
-    }catch{
+    }catch(error){
+        console.log(error)
         res.status(500).json()
     }
 });
