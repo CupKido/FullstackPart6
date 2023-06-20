@@ -5,7 +5,14 @@ const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json())
-
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); // Replace with your client application's URL
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (e.g., cookies, authorization headers)
+    next();
+  });
+  
 const tasksRouter = require('./routes/tasks')
 const usersRouter = require('./routes/users')
 const postsRouter = require('./routes/posts')
