@@ -3,6 +3,8 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TopNav from "./Components/TopNav/TopNav";
 import Login from "./Pages/Login/Login";
+import Info from "./Pages/Info/Info";
+import Todos from "./Pages/Todos/Todos";
 
 function App() {
     const [user, setUser] = useState(localStorage.getItem("User"));
@@ -25,9 +27,9 @@ function App() {
             {user && <TopNav onLogout={handleLogout} />}
             {user ? (
                 <Routes>
-                    {/*<Route path="/" element={<Navigate to="/Info" />} />*/}
-                    {/*<Route path="/Info" element={<Info />} />*/}
-                    {/*<Route path="/Todos" element={<Todos />} />*/}
+                    <Route path="/" element={<Navigate to="/Info" />} />
+                    <Route path="/Info" element={<Info />} />
+                    <Route path="/Todos" element={<Todos />} />
                     {/*<Route path="/Posts">*/}
                     {/*    <Route index element={<Posts />} />*/}
                     {/*    <Route path=":id" element={<Post />} />*/}
