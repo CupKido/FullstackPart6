@@ -44,7 +44,6 @@ module.exports.createUser = async (username, firstName, lastName, password) => {
     const user = {username : username, firstName : firstName, lastName : lastName, password : password}
     const status = await users.insertOne(user)
     if (status.acknowledged){
-        user.id = status.insertedId
         delete user.password
         return user
     }else{

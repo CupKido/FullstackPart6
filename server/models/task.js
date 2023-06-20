@@ -1,4 +1,3 @@
-const Users = require('./user.js')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.MONGO_DB_CONNECTION_STRING
 
@@ -22,16 +21,14 @@ module.exports.getTask = async (userId, taskId) => {
 }
 
 module.exports.createTask = async (userId, title) =>{
-    if (!(await Users.getUserById(userId))) return null;
     task = { userId : userId, title : title, completed : false }
     const res = await tasks.insertOne(task);
     return task
 }
 
-module.exports.updateTask = async (task) =>{
-    task._id = new ObjectId(task.id);
-    delete task.id;
-    return await tasks.updateOne({_id : new ObjectId(task._id)}, { $set : task});
+module.exports.updateTask = async (userId, taskId, title, completed) =>{
+    task = { userId, _id : new ObjectId(taskId), title, completed};
+    return (await tasks.updateOne({_id : new ObjectId(task._id)}, { $set : task})).modifiedCount;
 
 }
 

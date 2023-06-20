@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const Users = require('../models/user')
+const Tasks = require('../models/task')
+const Posts = require('../models/post')
+const Comments = require('../models/comment')
 const Joi = require('joi')
 const router = express.Router()
 
@@ -37,7 +40,7 @@ router.get('/:userId', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/CreateUser', async (req, res) => {
     const bodySchema = Joi.object({
         username : Joi.string().required(),
         firstName : Joi.string().required(),
@@ -61,12 +64,27 @@ router.post('/', async (req, res) => {
 })
 
 router.delete('/:userId', async (req, res) => {
-    const paramsSchema = Joi.object({
-        id : Joi.string().required()
-    })
-    const {error} = paramsSchema.validate(req.body)
-    if(error) return res.status(400).json(error.details[0].message)
-    const success = await Users.deleteUser(req.params.userId, req.params.taskId)
+    const userId = req.params.userId;
+    console.log(userId);
+    const tasks = await Tasks.getTasks(userId);
+    console.log(tasks);
+    tasks.forEach(async (task) => {
+        await Tasks.deleteTask(userId, task._id)
+        console.log("task", task._id);
+    });
+    const posts  = await Posts.getPosts(userId);
+    console.log(posts);
+    posts.forEach(async (post) => {
+        const comments = await Comments.getComments(post._id);
+        console.log(comments);
+        comments.forEach(async (comment) => {
+            await Comments.deleteComment(post._id, comment._id);
+            console.log("comment", comment._id);
+        })
+        await Posts.deletePost(userId, post._id);
+        console.log("post", post._id);
+    });
+    const success = await Users.deleteUser(req.params.userId);
     if (success){
         res.status(200).json({userId})
     }else{
