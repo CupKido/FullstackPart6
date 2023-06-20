@@ -8,7 +8,7 @@ function Login({ onLogin }) {
 
   async function handleSubmit(event) {
     axios.post("http://localhost:5000/login", {
-        username: username,
+        username: username ,
         password: password
     })
     .then((response) => {
