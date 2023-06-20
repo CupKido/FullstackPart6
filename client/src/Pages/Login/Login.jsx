@@ -1,36 +1,27 @@
 import { useState } from "react";
 import "./LoginStyle.css";
+import axios from "axios";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(event) {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users?name=${username}`
-      );
-      const users = await response.json();
-      if (users.length === 0) {
-        alert("User was not found");
-        return;
-      }
-      const user = users[0];
-      const lat = user.address.geo.lat;
-      const actualPassword = lat.substring(lat.length - 4);
+    axios.post("http://localhost:5000/login", {
+        username: username,
+        password: password
+    })
+    .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          console.log(response.data);
+        }
 
-      if (password === actualPassword) {
-        alert("Login successful");
-        onLogin(user);
-      } else {
-        alert("Password is incorrect");
-      }
-    } catch (error) {
-      alert("Error getting info from server");
-      console.error(error);
-    }
+
+    })
   }
+
+
 
   return (
     <main>
@@ -54,7 +45,7 @@ function Login({ onLogin }) {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Log In</button>
+        <button type="button" onClick={handleSubmit} >Log In</button>
       </form>
     </main>
   );
