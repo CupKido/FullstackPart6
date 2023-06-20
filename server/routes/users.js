@@ -52,8 +52,8 @@ router.post('/', async (req, res) => {
     const lastName = req.body.lastName;
     const password = req.body.password;
     try{
+        if (await Users.getUser(username, password)) return res.status(409).json();
         const result = await Users.createUser(username, firstName, lastName, password);
-        if (!result) return res.status(409).json()
         res.status(201).json(result)
     }catch{
         res.status(500)

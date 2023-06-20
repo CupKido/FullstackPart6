@@ -9,54 +9,52 @@ const client = new MongoClient(uri, {
     }
 });
 
-async function getCollection(callback){
-    await client.connect();
-    const tasks = await client.db("fullstack6").collection("users");
-    const res = await callback(tasks)
-    await client.close();
-    return res;
-}
+const users = client.db("fullstack6").collection("users");
+// async function getCollection(callback){
+//     await client.connect();
+//     const tasks = await client.db("fullstack6").collection("users");
+//     const res = await callback(tasks)
+//     await client.close();
+//     return res;
+// }
 
 
 
 module.exports.getUser = async (username, password) => {
-    return await getCollection(async (users) => {
+    // return await getCollection(async (users) => {
         let user = await users.findOne({username : username, password : password})
         if (!user) return null
         delete user.password
         return user
-    })
+    // })
 }
 
 module.exports.getUserById = async (userId) => {
-    return await getCollection(async (users) => {
+    // return await getCollection(async (users) => {
         let user = await users.findOne({_id : new ObjectId(userId)})
         if (!user) return null
         delete user.password
         return user
-    })
+    // })
 }
 
 module.exports.createUser = async (username, firstName, lastName, password) => {
-    if (await module.exports.getUser(username, password)) return null;
+    
 
-    return await getCollection(async (users) => {
-        const user = {username : username, firstName : firstName, lastName : lastName, password : password}
-        const status = await users.insertOne(user)
-        if (status.acknowledged){
-            user.id = status.insertedId
-            delete user.password
-            return user
-        }else{
-            return null
-        }
-    })
+    const user = {username : username, firstName : firstName, lastName : lastName, password : password}
+    const status = await users.insertOne(user)
+    if (status.acknowledged){
+        user.id = status.insertedId
+        delete user.password
+        return user
+    }else{
+        return null
+    }
 }
 
 module.exports.deleteUser = async (userId) => {
-    return await getCollection(async (users) => {
-        return (await users.deleteOne({_id : new ObjectId(userId)})).deletedCount
-    })
+    return (await users.deleteOne({_id : new ObjectId(userId)})).deletedCount
+
 }
 
 
