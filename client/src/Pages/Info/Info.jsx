@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ObjectAsList from "../../Components/ObjectDisplay/ObjectDisplay";
+// import ObjectAsList from "../../Components/ObjectDisplay/ObjectDisplay";
 
 export function Info() {
   const [userData, setUserData] = useState([]);

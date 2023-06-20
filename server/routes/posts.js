@@ -3,7 +3,6 @@ const express = require('express');
 const Posts = require('../models/post')
 const Joi = require('joi')
 const router = express.Router()
-
 router.get('/posts/:userId', async (req, res) =>{
     try{
         const posts = await Posts.getPosts(req.params.userId)
