@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./TopNav.css";
 
+// eslint-disable-next-line react/prop-types
 export function TopNav({ onLogout }) {
   const handleLogout = () => {
     const confirmed = window.confirm("Are you sure you want to log out?");

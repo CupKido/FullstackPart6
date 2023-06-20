@@ -25,25 +25,25 @@ function App() {
             {user && <TopNav onLogout={handleLogout} />}
             {user ? (
                 <Routes>
-                    <Route path="/" element={<Navigate to="/Info" />} />
-                    <Route path="/Info" element={<Info />} />
-                    <Route path="/Todos" element={<Todos />} />
-                    <Route path="/Posts">
-                        <Route index element={<Posts />} />
-                        <Route path=":id" element={<Post />} />
-                        <Route path="NewPost" element={<NewPost></NewPost>}></Route>
-                    </Route>
-                    <Route path="/Albums">
-                        <Route index element={<Albums />} />
-                        <Route path=":id" element={<Album />} />
-                    </Route>
-                    <Route path="*" element={<NotFound />} />
+                    {/*<Route path="/" element={<Navigate to="/Info" />} />*/}
+                    {/*<Route path="/Info" element={<Info />} />*/}
+                    {/*<Route path="/Todos" element={<Todos />} />*/}
+                    {/*<Route path="/Posts">*/}
+                    {/*    <Route index element={<Posts />} />*/}
+                    {/*    <Route path=":id" element={<Post />} />*/}
+                    {/*    <Route path="NewPost" element={<NewPost></NewPost>}></Route>*/}
+                    {/*</Route>*/}
+                    {/*<Route path="/Albums">*/}
+                    {/*    <Route index element={<Albums />} />*/}
+                    {/*    <Route path=":id" element={<Album />} />*/}
+                    {/*</Route>*/}
+                    {/*<Route path="*" element={<NotFound />} />*/}
                 </Routes>
             ) : (
                 <Routes>
                     <Route path="/" element={<Navigate to="/Login" />} />
                     <Route path="/Login" element={<Login onLogin={handleLogin} />} />
-                    <Route path="*" element={<NotFound />} />
+                    {/*<Route path="*" element={<NotFound />} />*/}
                 </Routes>
             )}
         </>
