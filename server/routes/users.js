@@ -12,11 +12,12 @@ router.post('/login', async (req, res) => {
         password : Joi.string().required(),
         username : Joi.string().required()
     })
-    const {error} = bodySchema.validate(req.body)
+    const { error, value } = bodySchema.validate(req.body)
     if(error) return res.status(400).json(error.details[0].message)
+    const { username, password } = value
     try{
-        const user = await Users.getUser(req.body.username, req.body.password)
-        if(!user) return res.status(404).json()
+        const user = await Users.getUser(username, password)
+        if(!user) return res.status(404).json("User not found")
         res.status(200).json(user)
     }
     catch{
@@ -25,14 +26,10 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
-    const paramsSchema = Joi.object({
-        userId : Joi.string().required()
-    })
-    const {error} = paramsSchema.validate(req.params)
-    if(error) return res.status(400).json(error1.details[0].message)
-    try{
+    try
+    {
         const user = await Users.getUserById(req.params.userId)
-        if(!user) return res.status(404).json()
+        if(!user) return res.status(404).json("User not found")
         res.status(200).json(user)
     }
     catch{
@@ -47,13 +44,9 @@ router.post('/CreateUser', async (req, res) => {
         lastName : Joi.string().required(),
         password : Joi.string().required()
     })
-    const {error} = bodySchema.validate(req.body)
+    const {error, value} = bodySchema.validate(req.body)
     if(error) return res.status(400).json(error.details[0].message)
-
-    const username = req.body.username;
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const password = req.body.password;
+    const { username, password, firstName, lastName } = value
     try{
         if (await Users.getUser(username, password)) return res.status(409).json();
         const result = await Users.createUser(username, firstName, lastName, password);

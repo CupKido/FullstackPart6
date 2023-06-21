@@ -11,15 +11,16 @@ const router = express.Router()
 router.get('/:userId', async (req, res) =>{
     try{
         const user = await Users.getUserById(req.params.userId)
-        if (!user) return res.status(404).json()
+        if (!user) return res.status(404).json("User not found")
+        const {userId } = req.params
         if (!req.params.id){
-            const posts = await Posts.getPosts(req.params.userId)
+            const posts = await Posts.getPosts(userId)
             res.status(200).json(posts)
         }
         else{
             const postId = req.params.id
-            const post = await Posts.getPost(req.params.userId, req.params.postId)
-            if (post === null) res.status(404).json()
+            const post = await Posts.getPost(userId, req.params.postId)
+            if (post === null) res.status(404).json("Post not found")
             res.status(200).json(post)
         }
     }catch{
@@ -37,7 +38,7 @@ router.post('/:userId/CreatePost', async (req, res) =>{
     const {title, body} = value
     try{
         const user = await Users.getUserById(req.params.userId)
-        if (!user) return res.status(404).json()
+        if (!user) return res.status(404).json("User not found")
         const post = await Posts.createPost(req.params.userId, title, body)
         res.status(201).json(post)
     }catch{
@@ -56,9 +57,9 @@ router.put('/:userId/:postId', async (req, res) =>{
     const {title, body} = value
     try{
         const user = await Users.getUserById(req.params.userId)
-        if (!user) return res.status(404).json()
+        if (!user) return res.status(404).json("User not found")
         const result = await Posts.updatePost(req.params.userId, req.params.postId, title, body)
-        if (!result) return res.status(404).json()
+        if (!result) return res.status(404).json("Post not found")
         res.status(200).json(post)
     }catch{
         res.status(500).json()
