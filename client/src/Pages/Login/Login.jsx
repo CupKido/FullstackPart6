@@ -15,9 +15,14 @@ function Login({ onLogin }) {
         console.log(response);
         if (response.status === 200) {
           console.log(response.data);
+            alert("Login successful");
+            const user = response.data;
+            user.password = password;
+            onLogin(user);
         }
-
-
+        else {
+            alert("Password is incorrect");
+        }    
     })
   }
 
