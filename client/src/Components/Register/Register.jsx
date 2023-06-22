@@ -102,8 +102,8 @@ return (
                         onChange={(event) => setphone(event.target.value)}
                     />
                 </div>
-                <button type="submit" onClick={handleSubmitRegister} >Register</button>
-                <button type="submit" onClick={handleSubmitLogin} >Login</button>
+                <button type="button" onClick={handleSubmitRegister} >Register</button>
+                <button type="button" onClick={handleSubmitLogin} >Login</button>
 
             </form>
         </main>

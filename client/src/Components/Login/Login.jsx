@@ -43,11 +43,13 @@ const Login = ({onLogIn, isLoggedIn}) => {
     }
     getUser(username, password).then((response) => {
       if (response.status === 200) {
+        console.log(response.data);
         alert("Login successful");
         const user = response.data;
         user.password = password;
+        navigate('/UserInfo');
+        userUpdatedFunction(user);
         onLogIn(user);
-        navigate("/");
       }
       else {
         console.log('Login Failed');
@@ -63,7 +65,7 @@ const Login = ({onLogIn, isLoggedIn}) => {
   const handleSubmitRegister = (event) => {
     event.preventDefault();
     navigate("/Register");
-  };  
+  };
 
   return (
     <div className="login-container">
@@ -86,7 +88,7 @@ const Login = ({onLogIn, isLoggedIn}) => {
         />
         <p className='login-error'>{loginError}</p>
         <button className="login-button" type="submit">Login</button>
-        <button type="submit" onClick={handleSubmitRegister} >Register</button>
+        <button type="button" onClick={handleSubmitRegister} >Register</button>
       </form>
     </div>
   );
