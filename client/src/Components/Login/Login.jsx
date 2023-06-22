@@ -43,13 +43,11 @@ const Login = ({onLogIn, isLoggedIn}) => {
     }
     getUser(username, password).then((response) => {
       if (response.status === 200) {
-        console.log(response.data);
         alert("Login successful");
         const user = response.data;
         user.password = password;
-        navigate('/UserInfo');
-        userUpdatedFunction(user);
         onLogIn(user);
+        navigate("/");
       }
       else {
         console.log('Login Failed');
