@@ -11,6 +11,7 @@ function Login({ onLogin }) {
   const api = useContext(ApiContext);
 
     async function handleSubmitLogin(event) {
+      console.log(api);
         api.post("/users/login", {
             username: username ,
             password: password
