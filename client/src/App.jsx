@@ -1,14 +1,14 @@
 import Login from './Components/Login/Login'
 import Todos from './Components/Todo/Todos'
 import Posts from './Components/posts/Posts'
-import Albums from './Components/albums/Albums'
 import UserInfo from './Components/UserInfo/UserInfo'
+
 import { useUserUpdate } from './UserContext'
 import { useState, useEffect } from 'react'
 import './styles/App.css'
 import {BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom'
 import UserProvider from './UserContext'
-
+import { ApiProvider } from './ApiContext'
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userName, setUserName] = useState('')
@@ -31,7 +31,8 @@ function App() {
   }
 
   return (
-    <UserProvider>
+    <ApiProvider>
+        <UserProvider>
       <BrowserRouter>
         <nav>
           <ul className="navbar">
@@ -56,7 +57,7 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/UserInfo" /> : <Navigate to="/login" />}>
+          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/Todos" /> : <Navigate to="/login" />}>
             
           </Route>
           <Route path="/login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
@@ -66,6 +67,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </UserProvider>
+    </ApiProvider>
   )
 }
 
