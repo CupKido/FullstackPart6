@@ -11,7 +11,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (e.g., cookies, authorization headers)
     next();
-  });
+});
   
 const tasksRouter = require('./routes/tasks')
 const usersRouter = require('./routes/users')
