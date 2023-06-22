@@ -5,7 +5,7 @@ const ApiContext = React.createContext();
 
 export const ApiProvider = ({children}) => {
   const api = axios.create({
-    baseURL: 'http://saartaler.site:80/api',
+    baseURL: 'http://localhost:5000/api',
   });
 
   return (

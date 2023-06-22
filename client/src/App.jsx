@@ -8,9 +8,6 @@ import Info from "./Pages/Info/Info";
 import Registration from "./Pages/Registration/Registration.jsx";
 
 // import Todos from "./Pages/Todos/Todos";
-const api = axios.create({
-    baseURL: 'http://saartaler.site:80',
-  });
 function App() {
     const [user, setUser] = useState(localStorage.getItem("User"));
     const navigate = useNavigate();
@@ -57,7 +54,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Navigate to="/Login" />} />
                         <Route path="/Login" element={<Login onLogin={handleLogin} />} />
-                        <Route path="/Registr" element={ <Registration onRegistr={handleRegistration} />} />
+                        <Route path="/Register" element={ <Registration onRegistr={handleRegistration} />} />
                         {/*<Route path="*" element={<NotFound />} />*/}
                     </Routes>
                 )}

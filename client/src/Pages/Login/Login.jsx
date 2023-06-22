@@ -1,15 +1,17 @@
 import { useState, useContext } from "react";
 import "./LoginStyle.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import Registration from "../Registration/Registration.jsx";
 import ApiContext from '../../ApiContext';
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigateTo = useNavigate();
   const api = useContext(ApiContext);
 
-    async function handleSubmitlogin(event) {
-        axios.post("/users/login", {
+    async function handleSubmitLogin(event) {
+        api.post("/users/login", {
             username: username ,
             password: password
         })
@@ -28,13 +30,15 @@ function Login({ onLogin }) {
             })
     }
 
-
+    const handleRegister = () => {
+      navigateTo('/Register')
+    };
 
 
   return (
     <main>
       <h1>Login</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmitLogin}>
         <div>
           <label className="Login-Label" htmlFor="username">Username</label>
           <input className="Login-Input"
@@ -53,8 +57,8 @@ function Login({ onLogin }) {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="button" onClick={handleSubmitlogin} >Log In</button>
-        <button type="button" onClick={handleSubmitRegistr} >Registr</button>
+        <button type="button" onClick={handleSubmitLogin} >Log In</button>
+        <button type="button" onClick={handleRegister} >Registr</button>
       </form>
     </main>
   );
