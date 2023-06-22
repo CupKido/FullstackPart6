@@ -1,19 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./LoginStyle.css";
 import axios from "axios";
 import Registration from "../Registration/Registration.jsx";
-
+import ApiContext from '../../ApiContext';
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-
-
-
-  }
+  const api = useContext(ApiContext);
 
     async function handleSubmitlogin(event) {
-        axios.post("http://localhost:5000/api/users/login", {
+        axios.post("/users/login", {
             username: username ,
             password: password
         })
