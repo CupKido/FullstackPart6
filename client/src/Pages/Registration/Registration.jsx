@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import ApiContext from '../../ApiContext';
+import {useNavigate} from "react-router-dom";
 
 function Registration({ onRegistr }) {
     const [username, setUsername] = useState("");
@@ -8,10 +10,10 @@ function Registration({ onRegistr }) {
     const [FirstName, setFirstName] = useState("");
     const [LastName, setLastName] = useState("");
     const [Phone, setPhone] = useState("");
-
-
-    async function handleSubmit(event) {
-        axios.post("http://localhost:5000/api/users/Registr", {
+    const api = useContext(ApiContext);
+    const navigate = useNavigate();
+    async function handleSubmitRegister(event) {
+        api.post("/users/login", {
             username: username,
             password: password,
             Email: Email,
@@ -20,14 +22,33 @@ function Registration({ onRegistr }) {
             Phone: Phone
 
         })
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    alert("Register successful");
+                    const user = response.data;
+                    user.password = password;
+                    onRegistr(user);
+                }
+                else if () {
+                    alert("Registration is incorrect");
+                }
+
+            }
 
 
 }
+    const handleSubmitLogin = (event) => {
+        event.preventDefault();
+        navigate("/Login");
+    }
+
 
 return (
     <main>
         <h1>Registration</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmitRegister}>
             <div>
                 <label className="Login-Label" htmlFor="username">Username</label>
                 <input className="Login-Input"
@@ -83,7 +104,9 @@ return (
                     onChange={(event) => setPhone(event.target.value)}
                 />
             </div>
-            <button type="button" onClick={handleSubmit} >Registr</button>
+            <button type="button" onClick={handleSubmitRegister} >Register</button>
+            <button type="button" onClick={handleSubmitLogin} >Login</button>
+
         </form>
     </main>
 );
