@@ -29,7 +29,11 @@
 }
 
 .Login-Input[type="text"],
-.Login-Input[type="password"] {
+.Login-Input[type="password"],
+.Login-Input[type="email"],
+.Login-Input[type="firstname"],
+.Login-Input[type="lastname"],
+.Login-Input[type="phone"]{
     padding: 10px 15px;
     width: 100%;
     border: none;
@@ -67,13 +71,30 @@ button[type="submit"]:hover {
 
 /* Adjust the size of the input fields and the background color of the labels */
 .login-form input[type="text"],
-.login-form input[type="password"] {
-    height: 40px;
-    color: black;
+.login-form input[type="password"],
+.login-form input[type="email"],
+.login-form input[type="firstname"],
+.login-form input[type="lastname"],
+.login-form input[type="phone"]
+{
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
 }
 
+
 label[for="username"],
-label[for="password"] {
+label[for="password"],
+label[for="email"],
+label[for="firstname"],
+label[for="lastname"],
+label[for="phone"]
+{
     background-color: #f1f1f1;
     color: black;
     padding: 10px 15px;
