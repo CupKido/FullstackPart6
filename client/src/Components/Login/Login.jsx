@@ -48,7 +48,6 @@ const Login = ({onLogIn, isLoggedIn}) => {
         const user = response.data;
         user.password = password;
         navigate('/UserInfo');
-        userUpdatedFunction(user);
         onLogIn(user);
       }
       else {

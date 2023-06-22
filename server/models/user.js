@@ -10,14 +10,6 @@ const client = new MongoClient(uri, {
 });
 
 const users = client.db("fullstack6").collection("users");
-// async function getCollection(callback){
-//     await client.connect();
-//     const tasks = await client.db("fullstack6").collection("users");
-//     const res = await callback(tasks)
-//     await client.close();
-//     return res;
-// }
-
 
 
 module.exports.getUser = async (username, password) => {
@@ -51,7 +43,6 @@ module.exports.createUser = async (username, password, firstName, lastName, emai
 
 module.exports.deleteUser = async (userId) => {
     return (await users.deleteOne({_id : new ObjectId(userId)})).deletedCount
-
 }
 
 
