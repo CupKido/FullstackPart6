@@ -20,24 +20,21 @@ function Registration({ onRegistr }) {
             firstName: firstName,
             lastName: lastName,
             phone: phone
-
         })
-            .then((response) => {
-                console.log(response);
-                if (response.status === 200) {
-                    console.log(response.data);
-                    alert("Register successful");
-                    const user = response.data;
-                    user.password = password;
-                    onRegistr(user);
-                }
-                else {
-                    alert("Registration is incorrect");
-                }
-
+        .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+                console.log(response.data);
+                alert("Register successful");
+                const user = response.data;
+                user.password = password;
+                onRegistr(user);
+            }
+            else {
+                alert("Registration is incorrect");
             }
 
-
+        });
     }
     const handleSubmitLogin = (event) => {
         event.preventDefault();
