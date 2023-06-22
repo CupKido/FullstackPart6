@@ -35,4 +35,4 @@ app.get('/', (req, res) => {
 app.use('/api/tasks', tasksRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/posts', postsRouter)
-app.listen(5000, () => console.log('Server started on port 5000'));
+app.listen(80, () => console.log('Server started on port 5000'));

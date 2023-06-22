@@ -21,5 +21,5 @@ ENV PORT=80
 # Start the server with nodemon
 CMD ["npm", "run", "start"]
 
-# docker build -t cupkido/scraper_site .
-# docker run -p 80:80 --name scraper_site cupkido/scraper_site
+# docker build -t cupkido/fullstack6 .
+# docker run -p 80:80 --name fullstack6 cupkido/fullstack6
