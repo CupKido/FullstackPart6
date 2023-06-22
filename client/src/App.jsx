@@ -26,7 +26,7 @@ function App() {
 
   const handleSubmit = (user) => {
     setIsLoggedIn(user !== undefined);
-    setUserName(user?.name ?? '');
+    setUserName(user?.username ?? '');
     userUpdated(user);
   }
   function getNav(){
