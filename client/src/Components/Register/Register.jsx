@@ -6,20 +6,20 @@ import {useNavigate} from "react-router-dom";
 function Registration({ onRegistr }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [Email, setEmail] = useState("");
-    const [FirstName, setFirstName] = useState("");
-    const [LastName, setLastName] = useState("");
-    const [Phone, setPhone] = useState("");
+    const [email, setemail] = useState("");
+    const [firstName, setfirstName] = useState("");
+    const [lastName, setlastName] = useState("");
+    const [phone, setphone] = useState("");
     const api = useContext(ApiContext);
     const navigate = useNavigate();
     async function handleSubmitRegister(event) {
         api.post("/users/login", {
-            username: username,
-            password: password,
-            Email: Email,
-            FirstName: FirstName,
-            LastName: LastName,
-            Phone: Phone
+            username,
+            password,
+            email,
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone
 
         })
             .then((response) => {
@@ -31,14 +31,14 @@ function Registration({ onRegistr }) {
                     user.password = password;
                     onRegistr(user);
                 }
-                else if () {
+                else {
                     alert("Registration is incorrect");
                 }
 
             }
 
 
-}
+    }
     const handleSubmitLogin = (event) => {
         event.preventDefault();
         navigate("/Login");
@@ -68,40 +68,40 @@ return (
                 />
             </div>
             <div>
-                <label className="Login-Label" htmlFor="Email">Email</label>
+                <label className="Login-Label" htmlFor="email">email</label>
                 <input className="Login-Input"
                     type="text"
-                    id="Email"
-                    value={Email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    id="email"
+                    value={email}
+                    onChange={(event) => setemail(event.target.value)}
                 />
             </div>
             <div>
-                <label className="Login-Label" htmlFor="FirstName">FirstName</label>
+                <label className="Login-Label" htmlFor="firstName">firstName</label>
                 <input className="Login-Input"
                     type="text"
-                    id="FirstName"
-                    value={FirstName}
-                    onChange={(event) => setFirstName(event.target.value)}
+                    id="firstName"
+                    value={firstName}
+                    onChange={(event) => setfirstName(event.target.value)}
                 />
             </div>
             <div>
-                <label className="Login-Label" htmlFor="LastName">LastName</label>
+                <label className="Login-Label" htmlFor="lastName">lastName</label>
                 <input className="Login-Input"
 
                     type="text"
-                    id="LastName"
-                    value={LastName}
-                    onChange={(event) => setLastName(event.target.value)}
+                    id="lastName"
+                    value={lastName}
+                    onChange={(event) => setlastName(event.target.value)}
                 />
             </div>
             <div>
-                <label className="Login-Label" htmlFor="Phone">Phone</label>
+                <label className="Login-Label" htmlFor="phone">phone</label>
                 <input className="Login-Input"
                     type="text"
-                    id="Phone"
-                    value={Phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                    id="phone"
+                    value={phone}
+                    onChange={(event) => setphone(event.target.value)}
                 />
             </div>
             <button type="button" onClick={handleSubmitRegister} >Register</button>

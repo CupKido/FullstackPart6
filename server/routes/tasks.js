@@ -59,7 +59,7 @@ router.delete('/:userId/:taskId', async (req, res) => {
     if (!(await Users.getUserById(req.params.userId))) return res.status(404).json()
     const result = await Tasks.deleteTask(req.params.userId, req.params.taskId)
     if (!result) return res.status(404).send('Task not found')
-    res.status(200).json(req.params.userId)
+    res.status(200).json(req.params.taskId)
 })
 
 module.exports = router

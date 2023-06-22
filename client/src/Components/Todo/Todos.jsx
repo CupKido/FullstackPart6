@@ -1,8 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useContext } from 'react'
 import Task from './task'
 import '../../styles/Todos.css'
 import { useUser } from '../../UserContext'
-
+import ApiContext from '../../ApiContext'
 let user = {}
 function Todos() {
     const user = useUser()
@@ -11,20 +11,16 @@ function Todos() {
     const [sortMethod, setSortMethod] = useState('serial') // serial, alphabetic, completed, random
     const [Tasks, setTasks] = useState([])
     const inputRef = useRef(null);
-
-    async function getTasks(callback) {
-      fetch('https://jsonplaceholder.typicode.com/todos?userId=' + user.id)
-      .then(response => response.json())
-      .then(json => callback(json));
-    }
+    const api = useContext(ApiContext);
     
     // initial fetch for tasks
     useEffect(() => {
       // user = JSON.parse(localStorage.getItem('user'))
-      
-  
-      getTasks((json)=>{
-        setTasks(json)
+      api.get('/tasks/' + user._id ).then((response) => {
+        console.log(response.data);
+        setTasks(response.data);
+      }).catch((error) => {
+        console.log(error)
       });
     }, []);
 
@@ -43,17 +39,20 @@ function Todos() {
 
 
     function addTask() {
-      let id = -1
-      for(let i = 0; i < Tasks.length; i++){
-        if(Tasks[i].id > id){
-          id = Tasks[i].id
-        }
+      const data = {
+        title: task_title
       }
-      console.log("id: ", id)
-      const tasks= [...Tasks, { title: task_title, completed: false, id: id + 1 }]
-      inputRef.current.value = '';
-
-      updateTasks(tasks)
+      api.post('/tasks/' + user._id + '/CreateTask', data).then((response) => {
+        console.log(response.data);
+        const tasks = [...Tasks, { title: task_title, completed: false, _id: response.data._id }]
+        inputRef.current.value = '';
+        updateTasks(tasks)
+      }).catch((error) => {
+        console.log(error)
+      });
+      
+      
+      
     }
 
     function updateTasks(tasks){
@@ -66,30 +65,36 @@ function Todos() {
 
 
     function HadleCompleteTask(task_id){
-      let tasks = Tasks.map((task) => {
-        if(task.id === task_id){
-          task.completed = !task.completed
-          fetch('https://jsonplaceholder.typicode.com/todos/' + task_id, {
-            method: 'PUT',
-            body: JSON.stringify({
-              id: task_id,
-              completed: task.completed
-            }),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          }).then((response) => response.json())
-          .then((json) => console.log(json.completed === task.completed ? 'success' : 'fail'))
+      Tasks.forEach((task, i) => {
+        if (task._id === task_id) {
+          const data = {
+            completed: !task.completed,
+            title: task.title
+          }
+          api.put('/tasks/' + user._id + '/' + task_id, data).then((response) => {
+            if (task_id == response.data){
+              const tasks = [...Tasks];
+              data._id = task_id;
+              tasks[i] = data;
+              updateTasks(tasks)
+            }
+          }).catch((error) => {
+            console.log(error)
+          });
+          return;
         }
-        return task
-      })
-
-      updateTasks(tasks)
+      });
     }
 
     function HadleDeleteTask(task_id){
-      let tasks = Tasks.filter((task) => task.id !== task_id)
-      updateTasks(tasks)
+      api.delete('/tasks/' + user._id + '/' + task_id).then((response) => {
+        if (task_id == response.data){
+          let tasks = Tasks.filter((task) => task._id !== task_id)
+          updateTasks(tasks)
+        }
+      }).catch((error) => {
+        console.log(error)
+      });
     }
 
 
@@ -116,7 +121,7 @@ function Todos() {
     function getTasksElements()
     {
       return Tasks.map((task, index) => (
-        <Task key={index} title={task.title} completed={task.completed} taskId={task.id} onCompletedChange={HadleCompleteTask} onDelete={HadleDeleteTask} />
+        <Task key={index} title={task.title} completed={task.completed} taskId={task._id} onCompletedChange={HadleCompleteTask} onDelete={HadleDeleteTask} />
     ));
     }
 
