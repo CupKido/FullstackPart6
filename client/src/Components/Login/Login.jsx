@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useUserUpdate } from '../../UserContext'
 import { useNavigate } from 'react-router-dom'
 import '../../styles/Login.css';
+import ApiContext from '../../ApiContext';
 
 const Login = ({onLogIn, isLoggedIn}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-
-  async function getUser(username) {
-    return await fetch(
-      'https://jsonplaceholder.typicode.com/users?username=' + username
-    ).then((response) => response.json());
+  const api = useContext(ApiContext);
+  async function getUser(username, password) {
+    return api.post("/users/login", {
+      username: username ,
+      password: password
+    })
   }
 
   const userUpdatedFunction = useUserUpdate();
@@ -39,30 +41,24 @@ const Login = ({onLogIn, isLoggedIn}) => {
       setLoginError('Please enter a password');
       return;
     }
-    const users = await getUser(username);
-    console.log(users);
-    if (users.length === 0) {
-      console.log('Login Failed');
-      setLoginError('User not found');
-      return;
-    }
-    const user = users[0];
-    let number = user.address.geo.lat;
-    console.log(number);
-    let lastFourDigits = String(number).replace('.', '').slice(-4);
-    console.log(lastFourDigits);
-    if (password === lastFourDigits) {
-      console.log('Login Successful');
-      userUpdatedFunction(user);
-      localStorage.setItem('logged_user', JSON.stringify(user));
-      setLoginError('');
-      navigate('/todos');
-      onLogIn(user);
-      // save user to LocalStorage
-    } else {
-      console.log('Login Failed');
-      setLoginError('Mismatched password');
-    }
+    getUser(username, password).then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        alert("Login successful");
+        const user = response.data;
+        user.password = password;
+        navigate('/UserInfo');
+        onLogIn(user);
+      }
+      else {
+        console.log('Login Failed');
+        setLoginError('Mismatched password');
+      }
+    }).catch((error) => {
+      console.log(error)
+      setLoginError('Error logging in');
+    });
+    
   };
 
   return (
