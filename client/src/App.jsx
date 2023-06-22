@@ -6,7 +6,7 @@ import Login from "./Pages/Login/Login";
 import Info from "./Pages/Info/Info";
 // import Todos from "./Pages/Todos/Todos";
 const api = axios.create({
-    baseURL: 'http://verybad.site:80',
+    baseURL: 'http://saartaler.site:80',
   });
 function App() {
     const [user, setUser] = useState(localStorage.getItem("User"));
