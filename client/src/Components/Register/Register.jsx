@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import ApiContext from '../../ApiContext';
 import {useNavigate} from "react-router-dom";
+import "../../styles/Register.css";
 
 function Register({ onRegister }) {
     const [username, setUsername] = useState("");
@@ -101,8 +102,8 @@ return (
                         onChange={(event) => setphone(event.target.value)}
                     />
                 </div>
-                <button type="button" onClick={handleSubmitRegister} >Register</button>
-                <button type="button" onClick={handleSubmitLogin} >Login</button>
+                <button type="submit" onClick={handleSubmitRegister} >Register</button>
+                <button type="submit" onClick={handleSubmitLogin} >Login</button>
 
             </form>
         </main>

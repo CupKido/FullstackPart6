@@ -86,7 +86,7 @@ const Login = ({onLogIn, isLoggedIn}) => {
         />
         <p className='login-error'>{loginError}</p>
         <button className="login-button" type="submit">Login</button>
-        <button type="button" onClick={handleSubmitRegister} >Register</button>
+        <button type="submit" onClick={handleSubmitRegister} >Register</button>
       </form>
     </div>
   );

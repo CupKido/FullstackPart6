@@ -1,12 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
 /* Styles for Todos component */
-.todo-container {
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
 }
+
+/* Rest of your existing CSS styles */
+
 
 .todo-label {
   font-size: 18px;
