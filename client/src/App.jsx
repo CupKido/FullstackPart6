@@ -4,11 +4,19 @@ import { useState, useEffect } from "react";
 import TopNav from "./Components/TopNav/TopNav";
 import Login from "./Pages/Login/Login";
 import Info from "./Pages/Info/Info";
+import Registration from "./Pages/Registration/Registration.jsx";
+
 // import Todos from "./Pages/Todos/Todos";
 
 function App() {
     const [user, setUser] = useState(localStorage.getItem("User"));
     const navigate = useNavigate();
+
+    function handleRegistration(username) {
+        setUser(username);
+        localStorage.setItem("User", JSON.stringify(username));
+        navigate("/");
+    }
 
     function handleLogin(username) {
         setUser(username);
@@ -45,6 +53,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Navigate to="/Login" />} />
                     <Route path="/Login" element={<Login onLogin={handleLogin} />} />
+                    <Route path="/Registr" element={ <Registration onRegistr={handleRegistration} />} />
                     {/*<Route path="*" element={<NotFound />} />*/}
                 </Routes>
             )}

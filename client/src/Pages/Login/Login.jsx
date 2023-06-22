@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./LoginStyle.css";
 import axios from "axios";
+import Registration from "../Registration/Registration.jsx";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -51,6 +52,7 @@ function Login({ onLogin }) {
           />
         </div>
         <button type="button" onClick={handleSubmit} >Log In</button>
+          <button type="button" onClick={handleSubmit} >Registrat</button>
       </form>
     </main>
   );
