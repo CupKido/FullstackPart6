@@ -1,66 +1,73 @@
-import "./App.css";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { ApiProvider } from './ApiContext';
-import TopNav from "./Components/TopNav/TopNav";
-import Login from "./Pages/Login/Login";
-import Info from "./Pages/Info/Info";
-import Registration from "./Pages/Registration/Registration.jsx";
+import Login from './Components/Login/Login'
+import Todos from './Components/Todo/Todos'
+import Posts from './Components/posts/Posts'
+import Albums from './Components/albums/Albums'
+import UserInfo from './Components/UserInfo/UserInfo'
+import { useUserUpdate } from './UserContext'
+import { useState, useEffect } from 'react'
+import './styles/App.css'
+import {BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom'
+import UserProvider from './UserContext'
 
-// import Todos from "./Pages/Todos/Todos";
 function App() {
-    const [user, setUser] = useState(localStorage.getItem("User"));
-    const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userName, setUserName] = useState('')
+  const userUpdate = useUserUpdate()
 
-    function handleRegistration(username) {
-        setUser(username);
-        localStorage.setItem("User", JSON.stringify(username));
-        navigate("/");
-    }
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem('logged_user'))
+  //   if (user !== undefined) {
+  //     if (userUpdate){
+  //       userUpdate(user)
+  //     }
+  //     handleLogin(user)
+  //   }
+  // }, [])
 
-    function handleLogin(username) {
-        setUser(username);
-        localStorage.setItem("User", JSON.stringify(username));
-        navigate("/");
-    }
 
-    function handleLogout() {
-        setUser(null);
-        localStorage.clear();
-        navigate("/Login");
-    }
+  function handleLogin(user) {
+    setIsLoggedIn(user !== undefined)
+    setUserName(user?.name ?? '')
+  }
 
-    return (
-        <>
-            <ApiProvider>
-                {user && <TopNav onLogout={handleLogout} />}
-                {user ? (
-                    <Routes>
-                        {/* <Route path="/" element={<Navigate to="/Info" />} /> */}
-                        {/* <Route path="/Info" element={<Info />} /> */}
-                        {/* <Route path="/Todos" element={<Todos />} /> */}
-                        {/*<Route path="/Posts">*/}
-                        {/*    <Route index element={<Posts />} />*/}
-                        {/*    <Route path=":id" element={<Post />} />*/}
-                        {/*    <Route path="NewPost" element={<NewPost></NewPost>}></Route>*/}
-                        {/*</Route>*/}
-                        {/*<Route path="/Albums">*/}
-                        {/*    <Route index element={<Albums />} />*/}
-                        {/*    <Route path=":id" element={<Album />} />*/}
-                        {/*</Route>*/}
-                        {/*<Route path="*" element={<NotFound />} />*/}
-                    </Routes>
-                ) : (
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/Login" />} />
-                        <Route path="/Login" element={<Login onLogin={handleLogin} />} />
-                        <Route path="/Register" element={ <Registration onRegistr={handleRegistration} />} />
-                        {/*<Route path="*" element={<NotFound />} />*/}
-                    </Routes>
-                )}
-            </ApiProvider>
-        </>
-    );
+  return (
+    <UserProvider>
+      <BrowserRouter>
+        <nav>
+          <ul className="navbar">
+            <li>
+              <NavLink to="/login" activeClassName="active">{isLoggedIn ? "Logout" : "Login"}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/Todos" activeClassName="active">Todos</NavLink>
+            </li>
+            <li>
+              <NavLink to="/Posts" activeClassName="active">Posts</NavLink>
+            </li>
+            <li>
+              <NavLink to="/Album" activeClassName="active">Album</NavLink>
+            </li>
+            <li>
+              <NavLink to="/UserInfo" activeClassName="active">Info</NavLink>
+            </li>
+            <li style={{ marginLeft: "auto" }}>
+              {userName}
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/Todos" /> : <Navigate to="/login" />}>
+            
+          </Route>
+          <Route path="/login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
+          <Route path="/Todos" element={ isLoggedIn ? <Todos /> : <Navigate to="/login" />} />
+          <Route path="/Posts" element={ isLoggedIn ?<Posts /> : <Navigate to="/login" />} />
+          <Route path="/Album" element={ isLoggedIn ? <Albums /> : <Navigate to="/login" />} />
+          <Route path="/UserInfo" element={ isLoggedIn ? <UserInfo /> : <Navigate to="/login" />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
+  )
 }
 
-export default App;
+export default App
