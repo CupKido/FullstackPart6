@@ -1,24 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { NewTodoForm } from "../../Components/ToDo/NewTodoForm/NewTodoForm.jsx";
 import "./TodosStyle.css";
 import { TodoList } from "../../Components/ToDo/TodoList/TodoList.jsx";
 import ComboBoxSort from "../../Components/ToDo/ComboBoxSort/ComboBoxSort.jsx";
-
+import ApiContext from "../../ApiContext";
+import { useUser } from '../../UserContext'
 export function Todos() {
+  
   const [todos, setTodos] = useState(() => {
     const localValue = localStorage.getItem("Todos");
     if (localValue == null) return [];
 
     return JSON.parse(localValue);
   });
+  const user = useUser();
+  const api = useContext(ApiContext);
 
   useEffect(() => {
-    const userID = JSON.parse(localStorage.getItem("User")).id;
+    console.log('todos.length')
     if (todos.length == 0) {
-      // There are no Todos in localStorage
-      fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userID}`)
-        .then((response) => response.json())
-        .then((data) => setTodos(data));
+      api.get('/tasks/' + user._id ).then((response) => {
+        console.log(response.data);
+        setTodos(response.data);
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }, []);
 

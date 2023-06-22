@@ -46,9 +46,6 @@ function App() {
               <NavLink to="/Posts" activeClassName="active">Posts</NavLink>
             </li>
             <li>
-              <NavLink to="/Album" activeClassName="active">Album</NavLink>
-            </li>
-            <li>
               <NavLink to="/UserInfo" activeClassName="active">Info</NavLink>
             </li>
             <li style={{ marginLeft: "auto" }}>
