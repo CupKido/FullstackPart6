@@ -8,14 +8,9 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const api = useContext(ApiContext);
 
-<<<<<<< HEAD
     async function handleSubmitLogin(event) {
       console.log(api);
         api.post("/users/login", {
-=======
-    async function handleSubmitlogin(event) {
-        axios.post("/users/login", {
->>>>>>> 9d9c0e4a7a9f27815e94be09505f8511869c24b4
             username: username ,
             password: password
         })
