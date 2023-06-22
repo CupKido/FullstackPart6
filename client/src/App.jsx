@@ -62,7 +62,6 @@ function App() {
           <Route path="/login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
           <Route path="/Todos" element={ isLoggedIn ? <Todos /> : <Navigate to="/login" />} />
           <Route path="/Posts" element={ isLoggedIn ?<Posts /> : <Navigate to="/login" />} />
-          <Route path="/Album" element={ isLoggedIn ? <Albums /> : <Navigate to="/login" />} />
           <Route path="/UserInfo" element={ isLoggedIn ? <UserInfo /> : <Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>

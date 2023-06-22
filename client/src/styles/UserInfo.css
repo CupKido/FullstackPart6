@@ -1,0 +1,47 @@
+.user-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.user-header {
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.user-username {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.user-email {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.user-address,
+.user-phone,
+.user-website,
+.user-company {
+margin-bottom: 20px;
+}
+
+.user-address p,
+.user-phone p,
+.user-website p,
+.user-company p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.user-address strong,
+.user-phone strong,
+.user-website strong,
+.user-company strong {
+    font-weight: bold;
+}
