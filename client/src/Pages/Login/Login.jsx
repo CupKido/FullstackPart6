@@ -7,25 +7,31 @@ function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSubmit(event) {
-    axios.post("http://localhost:5000/api/users/login", {
-        username: username ,
-        password: password
-    })
-    .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          console.log(response.data);
-            alert("Login successful");
-            const user = response.data;
-            user.password = password;
-            onLogin(user);
-        }
-        else {
-            alert("Password is incorrect");
-        }    
-    })
+
+
+
   }
+
+    async function handleSubmitlogin(event) {
+        axios.post("http://localhost:5000/api/users/login", {
+            username: username ,
+            password: password
+        })
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    alert("Login successful");
+                    const user = response.data;
+                    user.password = password;
+                    onLogin(user);
+                }
+                else {
+                    alert("Password is incorrect");
+                }
+            })
+    }
+
 
 
 
@@ -51,8 +57,8 @@ function Login({ onLogin }) {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="button" onClick={handleSubmit} >Log In</button>
-          <button type="button" onClick={handleSubmit} >Registrat</button>
+        <button type="button" onClick={handleSubmitlogin} >Log In</button>
+        <button type="button" onClick={handleSubmitRegistr} >Registr</button>
       </form>
     </main>
   );
