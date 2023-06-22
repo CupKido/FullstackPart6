@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Post from './Post';
 import { useUser } from '../../UserContext';
 import ApiContext from '../../ApiContext';
+import '../../styles/posts.css';
 function Posts() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');

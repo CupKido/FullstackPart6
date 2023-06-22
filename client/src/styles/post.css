@@ -1,0 +1,39 @@
+.post-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.post-container button {
+    background-color: #ffca3a;
+    color: #272727;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.post-container button:hover {
+    background-color: #ffdb6a;
+}
+
+.post-container h2 {
+    margin: 0;
+}
+
+.post-container p {
+    margin: 10px 0;
+}
+
+.comment-container {
+    margin-top: 20px;
+}
+
+.comment-container hr {
+    height: 1px;
+    background-color: #ccc;
+    border: none;
+    margin: 10px 0;
+}

@@ -3,6 +3,7 @@ import Comment from './Comment';
 import { Link } from "react-router-dom";
 import ApiContext from "../../ApiContext";
 import { useUser } from "../../UserContext";
+import '../../styles/posts.css';
 function Post({post}){
     const [extend, setExtend] = useState(false);
     const [showComments, setShowComments] = useState(false);

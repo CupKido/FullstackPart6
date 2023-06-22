@@ -68,6 +68,8 @@ const Login = ({onLogIn, isLoggedIn}) => {
   };
 
   return (
+      <main>
+        <h1>Login</h1>
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
         <label className="login-label" htmlFor="username">Username:</label>
@@ -87,10 +89,11 @@ const Login = ({onLogIn, isLoggedIn}) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <p className='login-error'>{loginError}</p>
-        <button className="login-button" type="submit">Login</button>
-        <button type="button" onClick={handleSubmitRegister} >Register</button>
+        <button className="submit-button" type="submit">Login</button>
+        <button className="submit-button" type="button" onClick={handleSubmitRegister} >Register</button>
       </form>
     </div>
+      </main>
   );
 };
   

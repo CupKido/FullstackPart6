@@ -51,11 +51,10 @@
 }
 
 /* Style the login button */
-button[type="submit"],
-button[type="register"] {
+.submit-button {
     background-color: #ffca3a;
     color: #272727;
-    /*border: black;*/
+    border: black;
     border-radius: 5px;
     padding: 10px 15px;
     margin: 10px 0;
@@ -66,8 +65,7 @@ button[type="register"] {
     font-weight: bold;
 }
 
-button[type="submit"]:hover,
-button[type="register"]:hover {
+.submit-button:hover {
     background-color: #ffdb6a;
 }
 
@@ -87,8 +85,7 @@ label[for="password"] {
 }
 
 /* Adjust the height of the submit button */
-.login-form button[type="submit"],
-.login-form button[type="register"] {
+.submit-button {
     height: 40px;
     background-color: #ffca3a;
     color: #272727;
@@ -96,3 +93,23 @@ label[for="password"] {
     font-weight: bold;
     border-radius: 0 0 5px 5px;
 }
+h1 {
+    top: 20%;
+    left: 50%;
+    position: fixed;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+    color: #272727;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+}
+
+
+
