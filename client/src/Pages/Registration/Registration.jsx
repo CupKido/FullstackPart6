@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./LoginStyle.css";
 import axios from "axios";
 
 function Registration({ onRegistr }) {
