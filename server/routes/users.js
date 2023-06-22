@@ -42,14 +42,16 @@ router.post('/CreateUser', async (req, res) => {
         username : Joi.string().required(),
         firstName : Joi.string().required(),
         lastName : Joi.string().required(),
-        password : Joi.string().required()
+        password : Joi.string().required(),
+        email : Joi.string().required(),
+        phone : Joi.string().required()
     })
     const {error, value} = bodySchema.validate(req.body)
     if(error) return res.status(400).json(error.details[0].message)
-    const { username, password, firstName, lastName } = value
+    const { username, password, firstName, lastName, email, phone } = value
     try{
-        if (await Users.getUser(username, password)) return res.status(409).json();
-        const result = await Users.createUser(username, firstName, lastName, password);
+        if (await Users.getUser(username, password)) return res.status(409).json("User already exists");
+        const result = await Users.createUser(username, password, firstName, lastName, email, phone);
         res.status(201).json(result)
     }catch{
         res.status(500)

@@ -38,10 +38,8 @@ module.exports.getUserById = async (userId) => {
     // })
 }
 
-module.exports.createUser = async (username, firstName, lastName, password) => {
-    
-
-    const user = {username : username, firstName : firstName, lastName : lastName, password : password}
+module.exports.createUser = async (username, password, firstName, lastName, email, phone) => {
+    const user = {username : username, firstName : firstName, lastName : lastName, password : password, email : email, phone : phone}
     const status = await users.insertOne(user)
     if (status.acknowledged){
         delete user.password
