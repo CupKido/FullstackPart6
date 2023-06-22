@@ -2,7 +2,7 @@ import Login from './Components/Login/Login'
 import Todos from './Components/Todo/Todos'
 import Posts from './Components/posts/Posts'
 import UserInfo from './Components/UserInfo/UserInfo'
-
+import Register from './Components/Register/Register'
 import { useUserUpdate } from './UserContext'
 import { useState, useEffect } from 'react'
 import './styles/App.css'
@@ -30,37 +30,46 @@ function App() {
     setUserName(user?.name ?? '')
   }
 
+  function getNav(){
+    if (isLoggedIn){
+        return (
+            <nav>
+                <ul className="navbar">
+                    <li>
+                    <NavLink to="/Login" activeClassName="active">{isLoggedIn ? "Logout" : "Login"}</NavLink>
+                    </li>
+                    <li>
+                    <NavLink to="/Todos" activeClassName="active">Todos</NavLink>
+                    </li>
+                    <li>
+                    <NavLink to="/Posts" activeClassName="active">Posts</NavLink>
+                    </li>
+                    <li>
+                    <NavLink to="/UserInfo" activeClassName="active">Info</NavLink>
+                    </li>
+                    <li style={{ marginLeft: "auto" }}>
+                    {userName}
+                    </li>
+                </ul>
+            </nav>
+        )
+    }
+  }
+
   return (
     <ApiProvider>
         <UserProvider>
       <BrowserRouter>
-        <nav>
-          <ul className="navbar">
-            <li>
-              <NavLink to="/login" activeClassName="active">{isLoggedIn ? "Logout" : "Login"}</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Todos" activeClassName="active">Todos</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Posts" activeClassName="active">Posts</NavLink>
-            </li>
-            <li>
-              <NavLink to="/UserInfo" activeClassName="active">Info</NavLink>
-            </li>
-            <li style={{ marginLeft: "auto" }}>
-              {userName}
-            </li>
-          </ul>
-        </nav>
+        {getNav()}
         <Routes>
-          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/Todos" /> : <Navigate to="/login" />}>
+          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/UserInfo" /> : <Navigate to="/Login" />}>
             
           </Route>
-          <Route path="/login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
-          <Route path="/Todos" element={ isLoggedIn ? <Todos /> : <Navigate to="/login" />} />
-          <Route path="/Posts" element={ isLoggedIn ?<Posts /> : <Navigate to="/login" />} />
-          <Route path="/UserInfo" element={ isLoggedIn ? <UserInfo /> : <Navigate to="/login" />} />
+          <Route path="/Login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
+          <Route path="/Register" element={<Register onRegister={handleLogin} />} />
+          <Route path="/Todos" element={ isLoggedIn ? <Todos /> : <Navigate to="/Login" />} />
+          <Route path="/Posts" element={ isLoggedIn ?<Posts /> : <Navigate to="/Login" />} />
+          <Route path="/UserInfo" element={ isLoggedIn ? <UserInfo /> : <Navigate to="/Login" />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

@@ -62,6 +62,11 @@ const Login = ({onLogIn, isLoggedIn}) => {
     
   };
 
+  const handleSubmitRegister = (event) => {
+    event.preventDefault();
+    navigate("/Register");
+  };  
+
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
@@ -83,6 +88,7 @@ const Login = ({onLogIn, isLoggedIn}) => {
         />
         <p className='login-error'>{loginError}</p>
         <button className="login-button" type="submit">Login</button>
+        <button type="button" onClick={handleSubmitRegister} >Register</button>
       </form>
     </div>
   );

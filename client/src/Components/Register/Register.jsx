@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
 import ApiContext from '../../ApiContext';
 import {useNavigate} from "react-router-dom";
 
@@ -29,6 +28,7 @@ function Register({ onRegister }) {
                 const user = response.data;
                 user.password = password;
                 onRegister(user);
+                navigate("/");
             }
             else {
                 alert("Registration is incorrect");
@@ -108,4 +108,4 @@ return (
         </main>
     );
 }
-export default Registration;
+export default Register;
