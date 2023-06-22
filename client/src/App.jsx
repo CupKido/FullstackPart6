@@ -56,7 +56,7 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/Todos" /> : <Navigate to="/login" />}>
+          <Route exact path="/" element={ isLoggedIn ? <Navigate to="/UserInfo" /> : <Navigate to="/login" />}>
             
           </Route>
           <Route path="/login" element={<Login onLogIn={handleLogin} isLoggedIn={isLoggedIn} />} />
