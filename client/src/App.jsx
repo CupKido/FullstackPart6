@@ -7,7 +7,9 @@ import Info from "./Pages/Info/Info";
 import Registration from "./Pages/Registration/Registration.jsx";
 
 // import Todos from "./Pages/Todos/Todos";
-
+const api = axios.create({
+    baseURL: 'http://verybad.site:80',
+  });
 function App() {
     const [user, setUser] = useState(localStorage.getItem("User"));
     const navigate = useNavigate();
